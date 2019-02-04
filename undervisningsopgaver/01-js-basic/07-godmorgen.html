@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="DA">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+
+<body>
+    <script>
+        let day = new Date();
+        let hr = day.getHours();
+
+
+        //Godmorgen mellem kl. 5 og kl 10
+        if (hr > 5 && hr < 10) {
+            alert("Godmorgen");
+
+            //Goddag mellem kl 10 og 18
+        } else if (hr < 18) {
+            alert("Goddag");
+
+            //Godaften mellem 18 og 24
+        } else if (hr < 24) {
+            alert("Godaften");
+
+            //Godnat mellem 24 og 5.
+        } else if (hr < 5) {
+            alert("Godnat");
+
+        }
+    </script>
+</body>
+
+</html>
