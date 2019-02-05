@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #green {
+            line-height: 100px;
+            background-color: green;
+            height: 15vw;
+            width: 15vw;
+            text-align: center;
+        }
+
+        #red {
+            position: absolute;
+            line-height: 100px;
+            top: 17vw;
+            background-color: red;
+            height: 15vw;
+            width: 15vw;
+            border-radius: 50%;
+            text-align: center;
+        }
+    </style>
+    <title></title>
+</head>
+
+<body>
+
+    <div id="green"></div>
+    <div id="red"></div>
+
+
+
+    <script>
+        let greenURL = `http://helf-kea.dk/test/frog.png`;
+        let redURL = `http://helf-kea.dk/test/gris.png`;
+
+        document.addEventListener("DOMContentLoaded", start);
+
+        function start() {
+            console.log("start");
+
+            document.querySelector("#green").innerHTML = `<img src= ${greenURL} alt=grøn frø>`;
+            document.querySelector("#red").innerHTML = `<img src= ${redURL} alt=rød gris>`;
+
+
+            document.querySelector("#green").addEventListener("click", hopGreen);
+
+        }
+
+
+        function hopGreen() {
+            console.log("hop fra grøn")
+
+            document.querySelector("#red").innerHTML = `<img src= ${greenURL} alt=grøn frø>`;
+            document.querySelector("#green").innerHTML = `<img src= ${redURL} alt=rød gris>`;
+
+            document.querySelector("#red").addEventListener("click", hopRed);
+
+
+        }
+
+        function hopRed() {
+            console.log("hop fra rød")
+
+            document.querySelector("#green").innerHTML = `<img src= ${greenURL} alt=grøn frø>`;
+            document.querySelector("#red").innerHTML = `<img src= ${redURL} alt=rød gris>`;
+
+        }
+    </script>
+
+
+
+
+</body>
+
+</html>
