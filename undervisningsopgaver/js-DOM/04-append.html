@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #green {
+            line-height: 100px;
+            background-color: green;
+            height: 25vw;
+            width: 25vw;
+            text-align: center;
+        }
+
+        #red {
+            top: 17vw;
+            background-color: red;
+            height: 25vw;
+            width: 25vw;
+            border-radius: 50%;
+            text-align: center;
+        }
+    </style>
+    <title></title>
+</head>
+
+<body>
+
+    <div id="green"></div>
+    <div id="red"></div>
+
+
+
+    <script>
+        let greenURL = `http://helf-kea.dk/test/frog.png`;
+        let redURL = `http://helf-kea.dk/test/gris.png`;
+        let greyURL = `http://helf-kea.dk/test/fox.png`;
+
+
+        document.querySelector("#green").innerHTML = `<img src= ${greenURL} alt=grøn frø>`;
+        document.querySelector("#red").innerHTML = `<img src= ${redURL} alt=rød gris>`;
+        document.querySelector("#red").innerHTML += `<img src= ${greyURL} alt=grå ræv>`;
+    </script>
+
+
+
+
+</body>
+
+</html>
