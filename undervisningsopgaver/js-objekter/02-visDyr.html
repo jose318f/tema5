@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>js-oevelse-1</title>
+    <style>
+        body {
+            color: burlywood;
+        }
+
+        #display {
+            width: 20vw;
+            height: auto;
+            border: 1px solid silver;
+            margin: 7vw;
+            padding: 1vw;
+        }
+
+        /*********************/
+
+    </style>
+
+</head>
+
+<body>
+
+    <div id="dyr"></div>
+
+
+    <script>
+        let dyr = {
+            "navn": "gris",
+            "type": "pattedyr",
+            "levested": "skov (det er en øko gris)",
+            "billede": "http://helf-kea.dk/test/gris.png"
+        };
+
+        let navn = dyr.navn;
+        let type = dyr.type;
+        let levested = dyr.levested;
+        let billede = dyr.billede;
+
+
+        document.addEventListener("DOMContentLoaded", start);
+
+
+        function start() {
+            let dest = document.querySelector("#dyr");
+            dest.textContent = `Dyr: ${dyr.navn}, type: ${dyr.type}, levested: ${dyr.levested}`;
+            dest.innerHTML += ` <br><img src = "${dyr.billede}" alt= "${dyr.navn}" > `;
+
+        }
+
+    </script>
+</body>
+
+</html>
