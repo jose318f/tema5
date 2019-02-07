@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>js-oevelse-1</title>
+    <style>
+        body #display {
+            width: 20vw;
+            height: auto;
+            border: 1px solid silver;
+            margin: 7vw;
+            padding: 1vw;
+
+        }
+
+        /*********************/
+
+    </style>
+
+</head>
+
+<body>
+
+    <div id="liste"></div>
+
+
+    <script>
+        let alleDyr = [{
+                "navn": "frø",
+                "type": "padedyr",
+                "billede": "http://helf-kea.dk/test/frø.png",
+                "levested": "vandhullet"
+            },
+            {
+                "navn": "gris",
+                "type": "pattedyr",
+                "billede": "http://helf-kea.dk/test/gris.png",
+                "levested": "landbrug"
+            },
+            {
+                "navn": "ræv",
+                "type": "pattedyr",
+                "billede": "http://helf-kea.dk/test/fox.png",
+                "levested": "skoven"
+            },
+            {
+                "navn": "sild",
+                "type": "fisk",
+                "billede": "http://helf-kea.dk/test/sild.jpg",
+                "levested": "havet"
+            },
+            {
+                "navn": "krokodille",
+                "type": "krybdyr",
+                "billede": "http://helf-kea.dk/test/kroko.jpg",
+                "levested": "sump/floden"
+            }
+        ];
+
+        document.addEventListener("DOMContentLoaded", start);
+
+        function start() {
+            let dest = document.querySelector("#liste");
+            alleDyr.forEach(dyr => {
+                dest.innerHTML += `${dyr.navn} ${dyr.type} ${dyr.levested}<br>`;
+            })
+
+        }
+
+    </script>
+</body>
+
+</html>
