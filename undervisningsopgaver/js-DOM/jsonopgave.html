@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>js-oevelse-1</title>
+    <style>
+        #liste {
+            background-color: #e0e0e0;
+            grid-template-columns: 1fr 1fr 1fr;
+            display: grid;
+
+        }
+
+
+        .person {
+            font-family: monospace;
+            background-color: #ffffff;
+            width: 20vw;
+            height: 35vw;
+            margin: 2vw;
+            padding: 2vw;
+
+
+        }
+
+        img {
+            height: 20vw;
+            width: 20vw;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="liste">
+    </div>
+
+
+    <script>
+        let personer = [];
+        document.addEventListener("DOMContentLoaded", start);
+
+        function start() {
+            let dest = document.querySelector("#liste");
+
+
+            async function getJson() {
+                let jsonData = await fetch("https://mandalskeawebspace.dk/claude_php/clean_up_spreadsheet.php?id=1OLlD_GRoz71piHvnW306omRAyHS7vtLOILQt-K0YF_c");
+                personer = await jsonData.json();
+                visPersoner();
+
+            }
+
+
+            function visPersoner() {
+                alert("Hej! her er klasselisten")
+                personer.forEach((person) => {
+                    dest.innerHTML += `
+
+<div class="person">
+<h2>${person.navn} </h2>
+<p>Github: ${person.github}</p>
+<img src = "${person.billede}">
+<p>Email: ${person.email}</p>
+<p>Alder: ${person.alder}</p>
+<p>Køn: ${person.køn}</p>
+<p>Hold: ${person.hold}</p>
+</div>`;
+                })
+            }
+
+            getJson();
+        }
+    </script>
+</body>
+
+</html>
