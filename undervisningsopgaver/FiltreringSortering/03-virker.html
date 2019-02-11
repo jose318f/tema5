@@ -4,13 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>js-oevelse-1</title>
+    <title></title>
     <style>
+
+
+        .menu {
+            text-align: center;
+        }
+
+        .valgt {
+            background-color: #c60000;
+        }
+
         #liste {
             background-color: #e0e0e0;
             grid-template-columns: 1fr 1fr 1fr;
             display: grid;
-
         }
 
 
@@ -21,8 +30,6 @@
             height: 33vw;
             margin: 2vw;
             padding: 2vw;
-
-
         }
 
         img {
@@ -36,6 +43,11 @@
 </head>
 
 <body>
+    <div class="menu">
+        <button class="filter valgt" data-hold="alle">Alle</button>
+        <button class="filter" data-hold="a">Hold A</button>
+        <button class="filter" data-hold="b">Hold B</button>
+    </div>
 
     <div id="liste">
     </div>
@@ -43,11 +55,12 @@
 
     <script>
         let personer = [];
+        let filter = "alle";
+
         document.addEventListener("DOMContentLoaded", start);
 
         function start() {
             let dest = document.querySelector("#liste");
-
 
             async function getJson() {
                 let jsonData = await fetch("https://mandalskeawebspace.dk/claude_php/clean_up_spreadsheet.php?id=1OLlD_GRoz71piHvnW306omRAyHS7vtLOILQt-K0YF_c");
@@ -56,11 +69,13 @@
 
             }
 
-
             function visPersoner() {
-                alert("Hej! her er klasselisten")
+                dest.innerHTML = "";
                 personer.forEach((person) => {
-                    dest.innerHTML += `
+                    if (filter == "alle" || filter == person.hold) {
+
+
+                        dest.innerHTML += `
 
 <div class="person">
 <h2>${person.navn} </h2>
@@ -71,7 +86,18 @@
 <p>Køn: ${person.køn}</p>
 <p>Hold: ${person.hold}</p>
 </div>`;
+
+                    }
                 })
+            }
+
+            document.querySelectorAll(".filter").forEach(elm => {
+                elm.addEventListener("click", filtrering);
+            })
+
+            function filtrering() {
+                filter = this.getAttribute("data-hold");
+                visPersoner();
             }
 
             getJson();
