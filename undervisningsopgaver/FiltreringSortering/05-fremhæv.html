@@ -9,13 +9,14 @@
 
 
         body {
-            background-color: #ffad4d;
+            background-color: slategrey;
         }
 
         h1 {
+            font-size: 5vw;
             font-family: monospace;
             text-align: center;
-            color: #242057;
+            color: #b2b2b2;
         }
 
         .menu {
@@ -23,7 +24,9 @@
         }
 
         .valgt {
-            background-color: #c60000;
+            font-family: monospace;
+            font-size: 1.5vw;
+            background-color: #868686;
         }
 
         #liste {
@@ -34,7 +37,7 @@
 
         .person {
             font-family: monospace;
-            background-color: #ffffff;
+            background-color: #dedede;
             width: 20vw;
             height: 33vw;
             margin: 3vw;
@@ -112,6 +115,10 @@
             function filtrering() {
                 filter = this.getAttribute("data-hold");
                 document.querySelector("h1").textContent=this.textContent;
+                document.querySelectorAll(".filter").forEach(elm =>{
+                    elm.classList.remove("valgt");
+                })
+                this.classList.add("valgt");
                 visPersoner();
             }
 
