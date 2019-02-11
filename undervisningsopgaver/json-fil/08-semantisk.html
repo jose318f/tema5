@@ -59,18 +59,20 @@
 </head>
 
 <body>
-
+<header>
    <h1>Alle</h1>
-    <div  class="menu">
+    <nav  class="menu">
         <button class="filter valgt" data-hold="alle">Alle</button>
         <button class="filter" data-hold="a">Hold A</button>
         <button class="filter" data-hold="b">Hold B</button>
-    </div>
+    </nav>
+    </header>
 
+<main>
+    <section id="liste">
+    </section>
 
-    <div id="liste">
-    </div>
-
+</main>
 
     <script>
         let personer = [];
@@ -97,7 +99,7 @@
 
                         dest.innerHTML += `
 
-<div class="person">
+<article class="person">
 <h2>${person.navn} </h2>
 <img src = "${person.billede}">
 <p>Github: ${person.github}</p>
@@ -105,7 +107,7 @@
 <p>Alder: ${person.alder}</p>
 <p>Køn: ${person.køn}</p>
 <p>Hold: ${person.hold}</p>
-</div>`;
+</article>`;
 
                     }
                 })
@@ -131,6 +133,8 @@
         }
 
     </script>
+    <footer></footer>
 </body>
+
 
 </html>
