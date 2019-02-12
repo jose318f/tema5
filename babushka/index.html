@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <style>
+
+        body {
+            background-color: rgb(206, 0, 0);
+        }
+
+        h1 img {
+            border-radius: 0.5vw;
+            height: 10vw;
+            width: 10vw;
+
+        }
+
+        h1 {
+            font-weight: bolder;
+            font-size: 5vw;
+            font-family: monospace;
+            text-align: center;
+            color: yellow;
+        }
+
+        .menu {
+            text-align: center;
+        }
+
+        .valgt {
+            font-family: monospace;
+            font-size: 1.5vw;
+            background-color: #868686;
+        }
+
+        #liste {
+            grid-template-columns: 0.5fr 0.5fr 0.5fr;
+            display: grid;
+        }
+
+
+        .person {
+            border-radius: 0.5vw;
+            font-family: monospace;
+            background-color: rgba(59, 67, 75, 0.76);
+            color: white;
+            width: 20vw;
+            height: 33vw;
+            margin: 3vw;
+            padding: 2vw;
+            box-shadow: 0.3vw 0.3vw 1vw black;
+        }
+
+        img {
+            border-radius: 0.5vw;
+            height: 20vw;
+            width: 20vw;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+<header>
+   <h1>Alle <img src="kom.png"></h1>
+    <nav  class="menu">
+        <button class="filter valgt" data-kategori="alle">Alle</button>
+        <button class="filter" data-kategori="forretter">Forretter</button>
+        <button class="filter" data-kategori="hovedretter">Hovedretter</button>
+        <button class="filter" data-kategori="sideorders">Sideorders</button>
+        <button class="filter" data-kategori="desserter">Desserter</button>
+        <button class="filter" data-kategori="drikkevarer">Drikkevarer</button>
+    </nav>
+    </header>
+
+<main>
+    <section id="liste">
+    </section>
+
+</main>
+
+    <script>
+        let retter = [];
+        let filter = "alle";
+
+        document.addEventListener("DOMContentLoaded", start);
+
+        function start() {
+            let dest = document.querySelector("#liste");
+
+            async function getJson() {
+                let jsonData = await fetch("https://mandalskeawebspace.dk/claude_php/clean_up_spreadsheet.php?id=1jxxxFoWBuMJ1qhQ9BQIAyKHmP38XtAF9_sQr0xo5JLo");
+                retter = await jsonData.json();
+                //retter.sort((a,b,c,d,e)=>{return a.kategori.localeCompare(b.kategori)});
+                visRetter();
+
+            }
+
+            function visRetter() {
+                dest.innerHTML = "";
+                retter.forEach((ret) => {
+                    if (filter == "alle" || filter == ret.kategori) {
+
+
+                        dest.innerHTML += `
+
+<article class="retter">
+<img src = "small/${ret.billede}-sm.jpg">
+<p>Id: ${ret.id}</p>
+<p>Kategori: ${ret.kategori}</p>
+<h2>Navn: ${ret.navn} </h2>
+<p>Pris: ${ret.pris}</p>
+<p>Kort: ${ret.kort}</p>
+<p>Lang: ${ret.lang}</p>
+<p>Oprindelse: ${ret.oprindelse}</p>
+
+
+
+
+</article>`;
+
+                    }
+                })
+            }
+
+            document.querySelectorAll(".filter").forEach(elm => {
+                elm.addEventListener("click", filtrering);
+            })
+
+            //visPerson slut
+
+            function filtrering() {
+                filter = this.getAttribute("data-kategori");
+                document.querySelector("h1").textContent=this.textContent;
+                document.querySelectorAll(".filter").forEach(elm =>{
+                    elm.classList.remove("valgt");
+                })
+                this.classList.add("valgt");
+                visRetter();
+            }
+
+            getJson();
+        }
+
+    </script>
+    <footer></footer>
+</body>
+
+
+</html>
