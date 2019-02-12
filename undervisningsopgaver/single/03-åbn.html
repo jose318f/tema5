@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <style>
+
+        body {
+            background-color: slategrey;
+        }
+
+        h1 {
+            font-weight: bolder;
+            font-size: 5vw;
+            font-family: monospace;
+            text-align: center;
+            color: black;
+        }
+
+        .menu {
+            text-align: center;
+        }
+
+        .valgt {
+            font-family: monospace;
+            font-size: 1.5vw;
+            background-color: #868686;
+        }
+
+        #liste {
+            grid-template-columns: 0.5fr 0.5fr 0.5fr;
+            display: grid;
+        }
+
+
+        .person {
+            border-radius: 0.5vw;
+            font-family: monospace;
+            background-color: rgba(59, 67, 75, 0.76);
+            color: white;
+            width: 20vw;
+            height: 33vw;
+            margin: 3vw;
+            padding: 2vw;
+            box-shadow: 0.3vw 0.3vw 1vw black;
+        }
+
+        img {
+            border-radius: 0.5vw;
+            height: 20vw;
+            width: 20vw;
+
+        }
+
+
+        #popup {
+            background-color: white;
+            height: 100vh;
+            width: 100vw;
+            position: fixed;
+            display: none;
+        }
+
+        #luk {
+            box-sizing: border-box;
+            text-align: right;
+            padding-right: 1em;
+            font-family: monospace;
+            font-size: 3vw;
+            margin-left: 46.8vw;
+        }
+
+        #luk button{font-size: 2em;}
+
+        #indhold {
+            box-sizing: border-box;
+            background-color: slategray;
+            height: 90vh;
+            width: 90vw;
+            margin: auto;
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+<div id="popup">
+       <div id="luk"><button>x</button></div>
+       <div id="indhold"></div>
+   </div>
+
+<header>
+   <h1>Alle</h1>
+    <nav  class="menu">
+        <button class="filter valgt" data-hold="alle">Alle</button>
+        <button class="filter" data-hold="a">Hold A</button>
+        <button class="filter" data-hold="b">Hold B</button>
+    </nav>
+    </header>
+
+<main>
+
+    <section id="liste">
+    </section>
+
+</main>
+
+    <script>
+        let personer = [];
+        let filter = "alle";
+
+        document.addEventListener("DOMContentLoaded", start);
+
+        function start() {
+            let dest = document.querySelector("#liste");
+
+            async function getJson() {
+                let jsonData = await fetch("https://mandalskeawebspace.dk/claude_php/clean_up_spreadsheet.php?id=1OLlD_GRoz71piHvnW306omRAyHS7vtLOILQt-K0YF_c");
+                personer = await jsonData.json();
+                personer.sort((a,b)=>{return a.navn.localeCompare(b.navn)});
+                visPersoner();
+
+            }
+
+            function visPersoner() {
+                dest.innerHTML = "";
+                personer.forEach((person) => {
+                    if (filter == "alle" || filter == person.hold) {
+                        let template= `
+<article class="person">
+<h2>${person.navn}</h2>
+<img src = "${person.billede}">
+<p>Github: ${person.github}</p>
+<p>Email: ${person.email}</p>
+<p>Alder: ${person.alder}</p>
+<p>Køn: ${person.køn}</p>
+<p>Hold: ${person.hold}</p>
+</article>`;
+                        dest.insertAdjacentHTML("beforeend", template);
+                        dest.lastElementChild.addEventListener("click", åbn);
+
+
+                        function åbn(){
+
+                        document.querySelector("#indhold").innerHTML= `
+<h2>${person.navn} </h2>
+<img src = "${person.billede}">
+<p>Github: ${person.github}</p>
+<p>Email: ${person.email}</p>
+<p>Alder: ${person.alder}</p>
+<p>Køn: ${person.køn}</p>
+<p>Hold: ${person.hold}</p>
+</article>`;
+document.querySelector("#popup").style.display="block";
+
+                        }
+
+                    }
+                })
+            }
+
+            document.querySelectorAll(".filter").forEach(elm => {
+                elm.addEventListener("click", filtrering);
+            })
+
+            //visPerson slut
+
+            function filtrering() {
+                filter = this.getAttribute("data-hold");
+                document.querySelector("h1").textContent=this.textContent;
+                document.querySelectorAll(".filter").forEach(elm =>{
+                    elm.classList.remove("valgt");
+                })
+                this.classList.add("valgt");
+                visPersoner();
+            }
+
+            getJson();
+        }
+
+    </script>
+    <footer></footer>
+</body>
+
+
+</html>
