@@ -7,6 +7,8 @@
     <title></title>
     <style>
 
+
+
         body {
             background-color: rgb(59, 42, 95);
         }
@@ -61,7 +63,7 @@
         }
 
 
-        .person {
+        .ret {
             border-radius: 0.5vw;
             font-family: monospace;
             background-color: rgba(59, 67, 75, 0.76);
@@ -113,11 +115,6 @@
 </head>
 
 <body>
-<div id="popup">
-<div id="luk"><button>✕</button></div>
-<div id="indhold"></div>
-</div>
-
 <header>
   <div class="bloker"></div>
    <h4>Bistro Babushka</h4>
@@ -132,7 +129,6 @@
         <button class="filter" data-kategori="drikkevarer">Drikkevarer</button>
     </nav>
     </header>
-
 <main>
     <section id="liste">
     </section>
@@ -144,7 +140,6 @@
         let filter = "alle";
 
         document.addEventListener("DOMContentLoaded", start);
-
         function start() {
             let dest = document.querySelector("#liste");
 
@@ -152,16 +147,13 @@
                 let jsonData = await fetch("https://mandalskeawebspace.dk/claude_php/clean_up_spreadsheet.php?id=1jxxxFoWBuMJ1qhQ9BQIAyKHmP38XtAF9_sQr0xo5JLo");
                 retter = await jsonData.json();
                 visRetter();
-
             }
 
             function visRetter() {
                 dest.innerHTML = "";
-                retter.forEach((ret) => {
+                retter.forEach(ret => {
                     if (filter == "alle" || filter == ret.kategori) {
-
-let template= `
-
+                       let template= `
 <article class="retter">
 <img src = "small/${ret.billede}-sm.jpg">
 <p>Id: ${ret.id}</p>
@@ -175,37 +167,13 @@ let template= `
 
 
                         dest.insertAdjacentHTML("beforeend", template);
-                        dest.lastElementChild.addEventListener("click", åbn);
+                        dest.lastElementChild.addEventListener("click",()=>{
+                            location.href="babushka_singleview.html?id="+ret.id;
 
-                        function åbn(){
-
-                            document.querySelector("#indhold").innerHTML= `
-
-                            <article class="retter">
-<img src = "small/${ret.billede}-sm.jpg">
-<p>Id: ${ret.id}</p>
-<p>Kategori: ${ret.kategori}</p>
-<h2>Navn: ${ret.navn} </h2>
-<p>Pris: ${ret.pris}</p>
-<p>Kort: ${ret.kort}</p>
-<p>Lang: ${ret.lang}</p>
-<p>Oprindelse: ${ret.oprindelse}</p>
-</article>`;
-
-   document.querySelector("#popup").style.display="block";
-
-
-                        }
-
-
+                        });
                     }
                 })
             }
-
-            document.querySelector("#luk button").addEventListener("click", ()=>{
-                document.querySelector("#popup").style.display="none";
-            })
-
             document.querySelectorAll(".filter").forEach(elm => {
                 elm.addEventListener("click", filtrering);
             })
@@ -219,10 +187,8 @@ let template= `
                 this.classList.add("valgt");
                 visRetter();
             }
-
             getJson();
         }
-
     </script>
     <footer></footer>
 </body>
